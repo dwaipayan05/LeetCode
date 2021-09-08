@@ -16,35 +16,35 @@ public:
         if(root == NULL)
             return {};
         
-        queue<TreeNode*>q;
-        q.push(root);
+        vector<vector<int>> lvlOrderTraversed;
         
-        vector<vector<int>>lvlTraversal;
+        queue<TreeNode*> q;
+        q.push(root);
         
         while(!q.empty())
         {
-            vector<int>level;
+            int n = q.size();
             
-            int NodeCount = q.size();
-            
-            while(NodeCount > 0)
+            vector<int>lvl;
+            while(n > 0)
             {
                 TreeNode* Node = q.front();
-                level.push_back(Node -> val);  
-                
+                lvl.push_back(Node -> val);  
                 q.pop();
-            
-                if(Node -> left != NULL)q.push(Node -> left);            
-                if(Node -> right != NULL) q.push(Node -> right);
                 
-                NodeCount--;
-             }
+                if(Node->left != NULL)
+                    q.push(Node->left);
+                
+                if(Node->right != NULL)
+                    q.push(Node->right);
+                
+                n--;
+            }
             
-            lvlTraversal.push_back(level);
-            
+            lvlOrderTraversed.push_back(lvl);
         }
         
-        return lvlTraversal;
+        return lvlOrderTraversed;
         
     }
 };
