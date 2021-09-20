@@ -15,20 +15,18 @@ public:
         if(root == NULL)
             return NULL;
         
-        if(root -> val == p -> val || root -> val == q -> val)
+        if(root -> val == p->val || root -> val == q->val)
             return root;
         
-        TreeNode* leftLCA =lowestCommonAncestor(root->left, p, q);
+        TreeNode* leftLCA = lowestCommonAncestor(root->left, p, q);
         TreeNode* rightLCA = lowestCommonAncestor(root->right, p, q);
         
         if(leftLCA && rightLCA)
             return root;
         
-        if(leftLCA!=NULL)
+        if(leftLCA != NULL)
             return leftLCA;
-        
-        
+    
         return rightLCA;
-        
     }
 };
