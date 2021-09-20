@@ -2,8 +2,7 @@ class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
         
-        vector<vector<string>>res;
-        map<string,vector<string>>mp;
+        unordered_map<string, vector<string>>mp;
         
         for(int i = 0 ; i < strs.size(); i++)
         {
@@ -12,14 +11,14 @@ public:
             mp[x].push_back(strs[i]);
         }
         
-        for(auto x : mp)
+        vector<vector<string>>res;
+        for(auto i : mp)
         {
-            vector<string>temp = x.second;
+            vector<string>temp = i.second;
             res.push_back(temp);
         }
         
         return res;
-        
         
     }
 };
