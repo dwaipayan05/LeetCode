@@ -11,21 +11,6 @@
  */
 class Solution {
 public:
-    TreeNode* deleter(TreeNode* root)
-    {
-        if(root->right == NULL)
-            return root->left;
-        
-        if(root->left == NULL)
-            return root->right;
-        
-        TreeNode* rightChild = root->right;
-        TreeNode* lastRight = findLastRight(root->left);
-        lastRight->right = rightChild;
-        
-        return root->left;
-    }
-    
     TreeNode* findLastRight(TreeNode* root)
     {
         if(root->right == NULL)
@@ -33,9 +18,23 @@ public:
         
         return findLastRight(root->right);
     }
+    
+    TreeNode* deleter(TreeNode* root)
+    {
+        if(root->left == NULL)
+            return root->right;
+        else if(root -> right == NULL)
+            return root->left;
+        
+        TreeNode* rightchild = root->right;
+        TreeNode* lastRight = findLastRight(root->left);
+        lastRight->right = rightchild;
+        
+        return root->left;
+    }
     TreeNode* deleteNode(TreeNode* root, int key) {
         
-        if(root == NULL)
+        if(!root)
             return NULL;
         
         if(root->val == key)
@@ -47,31 +46,30 @@ public:
         {
             if(root->val > key)
             {
-                if(root -> left != NULL && root-> left -> val == key)
+                if(root->left != NULL && root->left->val == key)
                 {
-                    root -> left = deleter(root->left);
+                    root->left = deleter(root->left);
                     break;
                 }
                 
                 else
-                    root = root -> left;
+                    root = root->left;
             }
             
-            else 
+            else
             {
-                if(root->right != NULL && root->right->val == key)
+                if(root -> right != NULL && root -> right -> val == key)
                 {
-                    root -> right = deleter(root->right);
+                    root -> right = deleter(root -> right);
                     break;
                 }
                 
                 else
                     root = root -> right;
             }
-            
         }
         
-        return dummy;
         
+        return dummy;
     }
 };
