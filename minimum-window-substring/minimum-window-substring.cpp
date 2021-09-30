@@ -2,53 +2,51 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        unordered_map<char, int> char_fq;
+        unordered_map<char,int>mp;
         
-        for(auto c : t)
-            char_fq[c]++;
+        for(auto ch : t)
+            mp[ch]++;
         
-        int ans = INT_MAX;
+        
+        int start = 0;
+        int end = 0;
+        
+        int min_len = INT_MAX;
         int min_start = 0;
+        
         int count = 0;
         
-        
-        int i = 0, j = 0;
-    
-        for(i = 0; i < s.length(); i++)
+        for(int end = 0; end < s.length(); end++)
         {
-            if(char_fq[s[i]] > 0)
+            if(mp[s[end]] > 0)
                 count++;
             
-            char_fq[s[i]]--;
-            
+            mp[s[end]]--;
             if(count == t.length())
             {
-                while(j < i && char_fq[s[j]]<0)
+                while(start < end && mp[s[start]] < 0)
                 {
-                    char_fq[s[j]]++;
-                    j++;
+                    mp[s[start]]++;
+                    start++;
                 }
-                
-                if(i - j + 1 < ans)
+            
+                if(end - start + 1 < min_len)
                 {
-                    min_start = j;
-                    ans = i-j+1;
+                    min_start = start;
+                    min_len = end - start + 1;
                 }
-                
-                
-                char_fq[s[j]]++;
-                j++;
+            
+                mp[s[start]]++;
+                start++;
                 count--;
-            }
+                
+             }
+        
+        
         }
-        
-        
-        if(ans == INT_MAX)
+           
+        if(min_len == INT_MAX)
             return "";
-        
-        return s.substr(min_start, ans);
-            
-            
-        
+        return s.substr(min_start, min_len);
     }
 };
