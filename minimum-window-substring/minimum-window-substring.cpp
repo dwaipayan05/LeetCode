@@ -4,17 +4,16 @@ public:
         
         unordered_map<char,int>mp;
         
-        for(auto ch : t)
-            mp[ch]++;
+        for(auto c : t)
+            mp[c]++;
         
         
         int start = 0;
         int end = 0;
-        
-        int min_len = INT_MAX;
-        int min_start = 0;
-        
         int count = 0;
+        
+        int minLen = INT_MAX;
+        int minStart = 0;
         
         for(int end = 0; end < s.length(); end++)
         {
@@ -29,24 +28,23 @@ public:
                     mp[s[start]]++;
                     start++;
                 }
-            
-                if(end - start + 1 < min_len)
+                
+                if(end - start + 1 < minLen)
                 {
-                    min_start = start;
-                    min_len = end - start + 1;
+                    minLen = end - start + 1;
+                    minStart = start;
                 }
-            
+                
                 mp[s[start]]++;
                 start++;
                 count--;
+            }
                 
-             }
-        
-        
         }
-           
-        if(min_len == INT_MAX)
+        
+        if(minLen == INT_MAX)
             return "";
-        return s.substr(min_start, min_len);
+        
+        return s.substr(minStart, minLen);
     }
 };
