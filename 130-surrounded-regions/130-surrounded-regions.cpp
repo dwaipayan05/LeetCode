@@ -1,41 +1,47 @@
 class Solution {
 public:
+    
+    void dfs(vector<vector<char>>& board, int r, int c)
+    {
+        if(r < 0 or c < 0 or r == board.size() or c == board[0].size() or board[r][c] != 'O')
+            return;
+        
+        board[r][c] = 'T';
+        dfs(board,r+1,c);
+        dfs(board,r-1,c);
+        dfs(board,r,c+1);
+        dfs(board,r,c-1);
+    }
+    
     void solve(vector<vector<char>>& board) {
-        for(int col = 0; col < board.size(); col++){ //moving through first and last row
-            DFS(board, col, 0);
-            DFS(board, col, board[0].size()-1); 
+        
+        int R = board.size(), C = board[0].size();
+        
+        for(int i=0; i<R; i++)
+        {
+            if(board[i][0] == 'O') dfs(board,i,0);
+            if(board[i][C-1] == 'O') dfs(board,i,C-1);
         }
         
-        for(int row = 0; row < board[0].size(); row++){ //moving through first and last col
-            DFS(board, 0, row);
-            DFS(board, board.size()-1, row); 
+        for(int j=0; j<C; j++)
+        {
+            if(board[0][j] == 'O') dfs(board,0,j);
+            if(board[R-1][j] == 'O') dfs(board,R-1,j);
         }
         
-        for(int col = 0; col < board.size(); col++){
-            for(int row = 0; row < board[0].size(); row++){
-                if (board[col][row] == 'O'){
-                    board[col][row] = 'X';
+        for(int i=0; i<R; i++)
+        {
+            for(int j=0; j<C; j++)
+            {
+                if(board[i][j] == 'T')
+                {
+                    board[i][j] = 'O';   
                 }
-                if (board[col][row] == '#'){
-                    board[col][row] = 'O';
+                else
+                {
+                    board[i][j] = 'X';
                 }
             }
         }
     }
-private:
-    void DFS(vector<vector<char>>& board, int col, int row){
-        if (col >= 0 && row >= 0 && col < board.size() && row < board[0].size() && board[col][row] == 'O'){
-            board[col][row] = '#';
-            DFS(board, col-1, row);
-            DFS(board, col, row-1);
-            DFS(board, col+1, row);
-            DFS(board, col, row+1);
-        }
-    }
 };
-/*
-X X X X
-X O O X
-X X O X
-X O X X
-*/
